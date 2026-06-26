@@ -17,6 +17,7 @@ body{
     justify-content:center;
     align-items:center;
     height:100vh;
+    margin:0;
 }
 
 .box{
@@ -26,34 +27,17 @@ body{
     border-radius:10px;
     text-align:center;
     background:#181818;
+    box-shadow:0 0 15px #00ff88;
 }
 
-input{
-    width:90%;
-    padding:10px;
-    margin-top:15px;
-    background:#000;
+h2{
+    margin-top:0;
+}
+
+code{
     color:#00ff88;
-    border:1px solid #00ff88;
-}
-
-button{
-    margin-top:15px;
-    padding:10px 20px;
-    background:#00ff88;
-    border:none;
-    cursor:pointer;
+    font-size:18px;
     font-weight:bold;
-}
-
-#error{
-    color:red;
-    margin-top:15px;
-}
-
-#secret{
-    display:none;
-    margin-top:25px;
 }
 
 </style>
@@ -66,28 +50,19 @@ button{
 
 <h2>Secure Research Portal</h2>
 
-<p>Authentication Required</p>
+<p><strong>Auth Pass</strong></p>
 
-<input
-type="password"
-id="pass"
-placeholder="Enter Password">
-
-<br>
-
-<button onclick="login()">
-Unlock
-</button>
-
-<p id="error"></p>
-
-<div id="secret">
+<div>
 
 <h3>Access Granted</h3>
 
-<p>Excellent work.</p>
+<p>
+Excellent work.
+</p>
 
-<p>Your next clue:</p>
+<p>
+Your next clue:
+</p>
 
 <code>
 FLAG_PART_1 = CTF{
@@ -103,54 +78,9 @@ Now inspect the page source carefully...
 
 </div>
 
-<script>
-
-// SHA-256 hash of the password "classlab"
-const PASSWORD_HASH =
-"29a6497f5595fdae8027ae33b621ea12736ed3e52bf5c02607dd8b8af13d39d0";
-
-async function sha256(message){
-
-    const msgBuffer = new TextEncoder().encode(message);
-
-    const hashBuffer =
-        await crypto.subtle.digest("SHA-256", msgBuffer);
-
-    const hashArray =
-        Array.from(new Uint8Array(hashBuffer));
-
-    return hashArray
-        .map(b => b.toString(16).padStart(2,"0"))
-        .join("");
-
-}
-
-async function login(){
-
-    let input =
-        document.getElementById("pass").value;
-
-    let hash =
-        await sha256(input);
-
-    if(hash === PASSWORD_HASH){
-
-        document.getElementById("secret").style.display = "block";
-        document.getElementById("error").innerHTML = "";
-
-    }else{
-
-        document.getElementById("secret").style.display = "none";
-        document.getElementById("error").innerHTML = "Incorrect Password";
-
-    }
-
-}
-
-</script>
-
 <!--
 
+======================================================
 Congratulations.
 
 Since you're reading the source code,
@@ -160,9 +90,10 @@ FLAG_PART_2 = github_
 
 The remaining flag is hidden elsewhere.
 
-Hint:
-Hex:
+Hint (Hex):
 34326d617a65
+
+======================================================
 
 -->
 
