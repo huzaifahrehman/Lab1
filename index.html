@@ -95,7 +95,9 @@ FLAG_PART_1 = CTF{
 
 <br><br>
 
-<p>Now inspect the page source carefully...</p>
+<p>
+Now inspect the page source carefully...
+</p>
 
 </div>
 
@@ -103,8 +105,9 @@ FLAG_PART_1 = CTF{
 
 <script>
 
+// SHA-256 hash of the password "classlab"
 const PASSWORD_HASH =
-"0ef3d5c23d42b08e596eb9dba08912ef4844b91f8cb5b8e37d989da2e7532d96";
+"29a6497f5595fdae8027ae33b621ea12736ed3e52bf5c02607dd8b8af13d39d0";
 
 async function sha256(message){
 
@@ -117,7 +120,7 @@ async function sha256(message){
         Array.from(new Uint8Array(hashBuffer));
 
     return hashArray
-        .map(b=>b.toString(16).padStart(2,"0"))
+        .map(b => b.toString(16).padStart(2,"0"))
         .join("");
 
 }
@@ -130,19 +133,15 @@ async function login(){
     let hash =
         await sha256(input);
 
-    if(hash===PASSWORD_HASH){
+    if(hash === PASSWORD_HASH){
 
-        document.getElementById("secret").style.display="block";
+        document.getElementById("secret").style.display = "block";
+        document.getElementById("error").innerHTML = "";
 
-        document.getElementById("error").innerHTML="";
+    }else{
 
-    }
-
-    else{
-
-        document.getElementById("secret").style.display="none";
-
-        document.getElementById("error").innerHTML="Incorrect Password";
+        document.getElementById("secret").style.display = "none";
+        document.getElementById("error").innerHTML = "Incorrect Password";
 
     }
 
@@ -154,12 +153,15 @@ async function login(){
 
 Congratulations.
 
+Since you're reading the source code,
+you found another clue.
+
 FLAG_PART_2 = github_
 
-Hint
+The remaining flag is hidden elsewhere.
 
-Hex
-
+Hint:
+Hex:
 34326d617a65
 
 -->
