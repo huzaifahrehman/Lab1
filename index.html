@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Secure Research Portal</title>
+
+<style>
+
+body{
+    background:#111;
+    color:#00ff88;
+    font-family:Consolas, monospace;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.box{
+    width:400px;
+    padding:30px;
+    border:2px solid #00ff88;
+    border-radius:10px;
+    text-align:center;
+    background:#181818;
+}
+
+input{
+    width:90%;
+    padding:10px;
+    margin-top:15px;
+    background:#000;
+    color:#00ff88;
+    border:1px solid #00ff88;
+}
+
+button{
+    margin-top:15px;
+    padding:10px 20px;
+    background:#00ff88;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+#error{
+    color:red;
+    margin-top:15px;
+}
+
+#secret{
+    display:none;
+    margin-top:25px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Secure Research Portal</h2>
+
+<p>Authentication Required</p>
+
+<input
+type="password"
+id="pass"
+placeholder="Enter Password">
+
+<br>
+
+<button onclick="login()">
+Unlock
+</button>
+
+<p id="error"></p>
+
+<div id="secret">
+
+<h3>Access Granted</h3>
+
+<p>Excellent work.</p>
+
+<p>Your next clue:</p>
+
+<code>
+FLAG_PART_1 = CTF{
+</code>
+
+<br><br>
+
+<p>Now inspect the page source carefully...</p>
+
+</div>
+
+</div>
+
+<script>
+
+const PASSWORD_HASH =
+"0ef3d5c23d42b08e596eb9dba08912ef4844b91f8cb5b8e37d989da2e7532d96";
+
+async function sha256(message){
+
+    const msgBuffer = new TextEncoder().encode(message);
+
+    const hashBuffer =
+        await crypto.subtle.digest("SHA-256", msgBuffer);
+
+    const hashArray =
+        Array.from(new Uint8Array(hashBuffer));
+
+    return hashArray
+        .map(b=>b.toString(16).padStart(2,"0"))
+        .join("");
+
+}
+
+async function login(){
+
+    let input =
+        document.getElementById("pass").value;
+
+    let hash =
+        await sha256(input);
+
+    if(hash===PASSWORD_HASH){
+
+        document.getElementById("secret").style.display="block";
+
+        document.getElementById("error").innerHTML="";
+
+    }
+
+    else{
+
+        document.getElementById("secret").style.display="none";
+
+        document.getElementById("error").innerHTML="Incorrect Password";
+
+    }
+
+}
+
+</script>
+
+<!--
+
+Congratulations.
+
+FLAG_PART_2 = github_
+
+Hint
+
+Hex
+
+34326d617a65
+
+-->
+
+</body>
+</html>
